@@ -1,0 +1,11 @@
+{
+  "name": "game-maps",
+  "private": true,
+  "type": "module",
+  "description": "Static, data-driven interactive game maps.",
+  "scripts": {
+    "validate": "node tools/validate.mjs",
+    "format": "node tools/format-data.mjs",
+    "serve": "python3 -m http.server 8000"
+  }
+}

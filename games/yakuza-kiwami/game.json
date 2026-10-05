@@ -1,0 +1,70 @@
+{
+  "id": "yakuza-kiwami",
+  "title": "Yakuza Kiwami",
+  "subtitle": "Kamurocho, December 2005",
+  "maps": [
+    {
+      "id": "kamurocho",
+      "name": "Kamurocho",
+      "image": "maps/kamurocho.svg",
+      "width": 1200,
+      "height": 1000
+    }
+  ],
+  "groups": [
+    { "id": "collectibles", "name": "Collectibles" },
+    { "id": "side-quests", "name": "Side Quests" },
+    { "id": "places", "name": "Places" }
+  ],
+  "categories": [
+    {
+      "id": "locker-key",
+      "group": "collectibles",
+      "name": "Locker Keys",
+      "icon": "key",
+      "color": "#f5c542",
+      "trackable": true,
+      "fields": [
+        { "key": "reward", "label": "Locker contents" }
+      ]
+    },
+    {
+      "id": "substory",
+      "group": "side-quests",
+      "name": "Substories",
+      "icon": "quest",
+      "color": "#ff4f7b",
+      "trackable": true,
+      "fields": [
+        { "key": "number", "label": "Substory #" },
+        { "key": "chapter", "label": "Available from" },
+        { "key": "reward", "label": "Reward" }
+      ]
+    },
+    {
+      "id": "coin-lockers",
+      "group": "places",
+      "name": "Coin Lockers",
+      "icon": "locker",
+      "color": "#4fd1c5"
+    },
+    {
+      "id": "landmark",
+      "group": "places",
+      "name": "Landmarks",
+      "icon": "pin",
+      "color": "#8b93a7",
+      "showLabels": true
+    }
+  ],
+  "data": [
+    "data/locker-keys.json",
+    "data/substories.json",
+    "data/places.json"
+  ],
+  "credits": "Locker key locations and contents compiled from community guides (GameFAQs, TheGamer, RPG Site, Neoseeker, Sportskeeda). Yakuza Kiwami is a trademark of SEGA; this is an unofficial fan map.",
+  "notes": [
+    "Locker keys show up as small glints on the ground. Pick one up and take it to the coin lockers on Taihei Blvd. (in front of the theater, west of Millennium Tower) to open the matching locker.",
+    "Marker positions are placed on a schematic map from written guide descriptions, so treat them as \"roughly here\" and read the description for the exact spot. Use Edit mode to nudge a marker and export the corrected data."
+  ]
+}

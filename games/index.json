@@ -1,0 +1,10 @@
+{
+  "games": [
+    {
+      "id": "yakuza-kiwami",
+      "title": "Yakuza Kiwami",
+      "path": "games/yakuza-kiwami/",
+      "summary": "Kamurocho: all 50 locker keys and the coin lockers they open. Substories are next."
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "map": "kamurocho",
+  "category": "landmark",
+  "items": [
+    { "id": "coin-lockers-taihei", "category": "coin-lockers", "name": "Taihei Blvd. Coin Lockers", "x": 360, "y": 574, "description": "Where every locker key is used: 50 lockers in columns A-J and rows 1-5, on Taihei Blvd. in front of the theater, west of Millennium Tower." },
+    { "id": "lm-club-debolah", "name": "Club Debolah", "x": 150, "y": 428, "description": "Nightclub at the northwest corner of Theater Square." },
+    { "id": "lm-mach-bowl", "name": "Mach Bowl", "x": 75, "y": 500, "description": "Bowling alley at the west end of Theater Square." },
+    { "id": "lm-club-sega-theater", "name": "Club SEGA (Theater Square)", "x": 404, "y": 460, "description": "Arcade on the east side of Theater Square." },
+    { "id": "lm-gambling-hall", "name": "Gambling Hall", "x": 850, "y": 488, "description": "Near Millennium Tower." },
+    { "id": "lm-meb", "name": "MEB", "x": 735, "y": 366, "description": "Men's Entertainment Booth, north of Millennium Tower across Shichifuku St." },
+    { "id": "lm-shichifuku-parking", "name": "Shichifuku Parking Lot", "x": 618, "y": 330, "description": "Parking lot in the middle of Shichifuku St." },
+    { "id": "lm-childrens-park", "name": "Children's Park", "x": 245, "y": 348, "description": "Small park on the west part of Shichifuku St." },
+    { "id": "lm-pocket-circuit", "name": "Pocket Circuit Stadium", "x": 104, "y": 342, "description": "At the west end of Shichifuku St." },
+    { "id": "lm-m-store", "name": "M Store", "x": 370, "y": 368, "description": "Convenience store on Shichifuku St. West." },
+    { "id": "lm-batting-center", "name": "Batting Center", "x": 385, "y": 175, "description": "In the Hotel District." },
+    { "id": "lm-vincent", "name": "Vincent", "x": 1050, "y": 296, "description": "Bar with pool and darts near the east end of Park Blvd." },
+    { "id": "lm-poppo-tenkaichi", "name": "Poppo (Tenkaichi St.)", "x": 222, "y": 736, "description": "Convenience store on Tenkaichi St." },
+    { "id": "lm-serena", "name": "Serena", "x": 296, "y": 690, "description": "Reina's bar on Tenkaichi St.; Kiryu's hideout for much of the story." },
+    { "id": "lm-akaushimaru-tenkaichi", "name": "Akaushimaru (Tenkaichi St.)", "x": 256, "y": 626, "description": "Restaurant on Tenkaichi St., south of Theater Square." },
+    { "id": "lm-sushi-gin", "name": "Sushi Gin", "x": 330, "y": 904, "description": "Sushi bar on the west part of Showa St." },
+    { "id": "lm-cafe-alps", "name": "Cafe Alps", "x": 452, "y": 664, "description": "On Nakamichi St., just south of the Taihei Blvd. crossroads, west side of the street." },
+    { "id": "lm-poppo-nakamichi", "name": "Poppo (Nakamichi Alley)", "x": 572, "y": 640, "description": "Convenience store in Nakamichi Alley, south of Millennium Tower." },
+    { "id": "lm-ebisu-pawn", "name": "Ebisu Pawn", "x": 598, "y": 705, "description": "Pawn shop in Nakamichi Alley." },
+    { "id": "lm-orchid-palace", "name": "Orchid Palace Mahjong", "x": 652, "y": 796, "description": "Mahjong parlor in the southeast part of Nakamichi Alley." },
+    { "id": "lm-kotobuki-drugs", "name": "Kotobuki Drugs", "x": 724, "y": 630, "description": "Pharmacy on the corner of Taihei Blvd. and Pink St." },
+    { "id": "lm-akaushimaru-taihei", "name": "Akaushimaru (Taihei Blvd.)", "x": 764, "y": 634, "description": "Restaurant on Taihei Blvd., southeast of Millennium Tower." },
+    { "id": "lm-beam", "name": "Beam", "x": 684, "y": 838, "description": "DVD store on Pink St." },
+    { "id": "lm-shoten", "name": "Shoten", "x": 905, "y": 706, "description": "Shogi parlor on Senryo Ave." },
+    { "id": "lm-karaokekan", "name": "Karaokekan", "x": 905, "y": 862, "description": "Karaoke near the south end of Senryo Ave." },
+    { "id": "lm-public-park-3", "name": "Public Park 3", "x": 415, "y": 806, "description": "Small park on Tenkaichi Alley." }
+  ]
+}

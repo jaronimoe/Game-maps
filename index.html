@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Game Maps</title>
+  <meta name="description" content="Interactive collectible maps for games.">
+  <link rel="stylesheet" href="assets/css/map.css">
+  <style>
+    .home { max-width: 720px; margin: 0 auto; padding: 48px 16px; }
+    .home h1 { margin: 0; font-size: 32px; }
+    .home > p { color: var(--muted); margin: 6px 0 28px; }
+    .games { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+    .games a {
+      display: block;
+      padding: 18px 20px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: linear-gradient(160deg, rgba(255, 79, 123, 0.12), transparent 55%), var(--panel);
+      color: var(--text);
+      text-decoration: none;
+    }
+    .games a:hover { border-color: var(--accent); }
+    .games strong { font-size: 18px; }
+    .games span { display: block; margin-top: 4px; color: var(--muted); font-size: 14px; }
+  </style>
+</head>
+<body>
+  <main class="home">
+    <h1>Game Maps</h1>
+    <p>Interactive maps with collectible locations and progress tracking.</p>
+    <ul class="games" id="games"><li class="gm-empty">Loading…</li></ul>
+  </main>
+  <script type="module">
+    import { esc } from './assets/js/util.js';
+
+    const list = document.getElementById('games');
+    try {
+      const res = await fetch('games/index.json', { cache: 'no-cache' });
+      const { games } = await res.json();
+      list.innerHTML = games
+        .map((g) => `<li><a href="${esc(g.path)}"><strong>${esc(g.title)}</strong><span>${esc(g.summary)}</span></a></li>`)
+        .join('');
+    } catch {
+      list.innerHTML = '<li class="gm-empty">Could not load the game list. If you opened this file directly, serve the folder over HTTP instead (see README).</li>';
+    }
+  </script>
+</body>
+</html>

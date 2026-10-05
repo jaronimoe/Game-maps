@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Yakuza Kiwami Interactive Map</title>
+  <meta name="description" content="Interactive map of Kamurocho in Yakuza Kiwami with all 50 locker key locations and progress tracking.">
+  <link rel="stylesheet" href="../../assets/vendor/leaflet/leaflet.css">
+  <link rel="stylesheet" href="../../assets/css/map.css">
+</head>
+<body>
+  <div id="app" class="gm-app" data-config="game.json"></div>
+  <script src="../../assets/vendor/leaflet/leaflet.js"></script>
+  <script type="module">
+    import { mountGameMap } from '../../assets/js/game-map.js';
+    mountGameMap(document.getElementById('app'));
+  </script>
+</body>
+</html>
