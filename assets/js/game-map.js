@@ -433,11 +433,19 @@ export async function mountGameMap(root) {
       const li = els.list.querySelector(`.gm-item[data-id="${CSS.escape(id)}"]`);
       li?.classList.add('is-active');
       li?.scrollIntoView({ block: 'nearest' });
-      history.replaceState(null, '', `#${encodeURIComponent(id)}`);
+      setHash(`#${encodeURIComponent(id)}`);
     } else if (window.location.hash) {
-      history.replaceState(null, '', window.location.pathname + window.location.search);
+      setHash(window.location.pathname + window.location.search);
     }
     if (!id) syncMarkers();
+  }
+
+  function setHash(url) {
+    try {
+      history.replaceState(null, '', url);
+    } catch {
+      // Some embedded/sandboxed frames refuse history updates; deep links are a nicety.
+    }
   }
 
   function setFound(id, value) {
@@ -565,18 +573,22 @@ export async function mountGameMap(root) {
         const url = new URL(target.getAttribute('href'), window.location.href).href;
         copyText(url).then(
           () => { target.textContent = 'Link copied'; },
-          () => window.prompt('Copy this link:', url),
+          () => target.replaceWith(Object.assign(document.createElement('code'), { className: 'gm-code', textContent: url })),
         );
         break;
       }
       case 'reset-progress': {
-        const tracked = items.filter((i) => i.cat.trackable).map((i) => i.id);
-        if (window.confirm('Clear every "found" checkmark for this game?')) {
-          progress.clear(tracked);
-          for (const id of tracked) refreshIcon(byId.get(id));
-          refresh();
-          els.about.close();
+        // Two clicks instead of confirm(), which embedded viewers silently refuse.
+        if (target.dataset.armed !== 'true') {
+          target.dataset.armed = 'true';
+          target.textContent = 'Click again to clear all checkmarks';
+          break;
         }
+        const tracked = items.filter((i) => i.cat.trackable).map((i) => i.id);
+        progress.clear(tracked);
+        for (const id of tracked) refreshIcon(byId.get(id));
+        refresh();
+        els.about.close();
         break;
       }
       default:
