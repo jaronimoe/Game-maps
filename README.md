@@ -2,12 +2,14 @@
 
 Interactive, data-driven maps for games. It's a static site with no build step: Leaflet draws the map, and everything you see comes from JSON files.
 
-**Yakuza Kiwami** (`games/yakuza-kiwami/`): Kamurocho with all 50 locker keys, the coin lockers they open, and the landmarks the key descriptions refer to. A **Substories** layer is already wired up and is waiting for data.
+**Yakuza Kiwami** (`games/yakuza-kiwami/`): Kamurocho with all 50 locker keys, all 59 MesuKing cards (30 insect, 29 skill), the coin lockers, and the landmarks the descriptions refer to. A **Substories** layer is already wired up and is waiting for data.
 
 ## Features
 
 - Pan and zoom a schematic Kamurocho map, with markers for every locker key (A1–J5) and its locker contents.
-- Keys you get from substories (C1, I3, J5) are listed with their requirements and marked *not on map*.
+- MesuKing cards: the ones lying around town have their own markers (green insect cards, purple skill cards). Cards you buy (Ebisu Pawn, the Purgatory vendor) or get from the Professor open at that shop, and the shop's popup lists what it sells.
+- Underground Purgatory is drawn as a separate panel to the right of the district.
+- Keys and cards you get from substories are listed with their requirements and marked *not on map* until substory locations are added.
 - Tick **Found** to track progress. Progress is saved per browser, and you can hide found items.
 - Search across names, descriptions and rewards (press `/`).
 - Turn categories on and off: Collectibles, Side Quests, Places.
@@ -44,8 +46,9 @@ games/
   yakuza-kiwami/
     index.html                 mounts the engine with game.json
     game.json                  maps, groups, categories, data files
-    maps/kamurocho.svg         base map (1200 x 1000 units)
+    maps/kamurocho.svg         base map (1400 x 1000 units, Purgatory panel at x > 1180)
     data/locker-keys.json
+    data/mesuking-cards.json   insect + skill cards
     data/substories.json       empty, ready for side quests
     data/places.json           coin lockers + landmarks
 tools/
@@ -61,7 +64,7 @@ tools/
 | --- | --- |
 | `maps[]` | `{ id, name, image, width, height }`. `image` can be SVG (inlined, so it stays crisp) or PNG/JPG. Marker coordinates use the same `width × height` space. With more than one map, the sidebar shows tabs (for example, an interior or Purgatory map later). |
 | `groups[]` | Sidebar sections: `{ id, name }`. |
-| `categories[]` | `{ id, group, name, color, icon, trackable?, showLabels?, hidden?, fields? }`. `icon` is one of `key`, `quest`, `locker`, `pin`, `star`. `trackable` adds the Found checkbox and a progress bar. `fields` lists extra item properties to show in the popup (`{ key, label }`). The first field with a value is also the subtitle in the list. |
+| `categories[]` | `{ id, group, name, color, icon, trackable?, showLabels?, hidden?, fields?, subtitle? }`. `icon` is one of `key`, `quest`, `locker`, `pin`, `star`, `bug`, `card`. `trackable` adds the Found checkbox and a progress bar. `fields` lists extra item properties to show in the popup (`{ key, label }`). The list subtitle is the item property named by `subtitle`, or else the first field with a value. |
 | `data[]` | Data files, relative to the game folder. |
 | `notes[]`, `credits` | Text for the About dialog. |
 
@@ -88,6 +91,7 @@ tools/
 | `label` | Short text drawn on the marker (`A1`, `42`). Without one, the category icon is shown. |
 | `description` | How to find it. |
 | `inside` | Building name, shown as "Indoors · …". |
+| `at` | Id of the place that sells or hands out the item (e.g. `"lm-ebisu-pawn"`). Items without their own x/y open at that place, and the place's popup lists everything available there. |
 | `notes` | Extra tips. |
 | `requires` | `{ "substory": 42, "chapter": 5, "text": "…" }`. Shown in the popup. `substory` links to the substory entry with that `number` once it exists, and the substory's popup links back. |
 | *(category fields)* | e.g. `reward`, `number`, `chapter`, as listed in that category's `fields`. |
@@ -107,7 +111,7 @@ The `substory` category, its sidebar entry (currently "coming soon") and `data/s
 
 3. Run `npm run format && npm run validate`.
 
-Nothing else is needed. The category gets a progress bar, markers appear in pink, and locker keys C1, I3 and J5 (`requires.substory`) automatically link to their substory.
+Nothing else is needed. The category gets a progress bar and markers appear in pink. Locker keys C1, I3 and J5 and the eight MesuKing cards from substories #71–78 (`requires.substory`) link to their substory automatically, and open at its location.
 
 To add other kinds of things (Majima Everywhere encounters, minigames, restaurants…), add a category to `game.json`, add a data file, and list it in `data`.
 
@@ -132,4 +136,4 @@ Copy `games/yakuza-kiwami/` to `games/<new-game>/`, edit `game.json` and the dat
 
 ## Credits
 
-Locker key locations and contents were compiled from community guides (GameFAQs, TheGamer, RPG Site, Neoseeker, Sportskeeda). Yakuza Kiwami is a trademark of SEGA, and this is an unofficial fan project. Leaflet © Volodymyr Agafonkin, BSD-2-Clause (`assets/vendor/leaflet/LICENSE`).
+Locker key and MesuKing card locations were compiled from community guides (GameFAQs, TheGamer, RPG Site, Neoseeker, Gamers Heroes, GameSkinny, Sportskeeda). Yakuza Kiwami is a trademark of SEGA, and this is an unofficial fan project. Leaflet © Volodymyr Agafonkin, BSD-2-Clause (`assets/vendor/leaflet/LICENSE`).

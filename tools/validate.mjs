@@ -9,7 +9,7 @@ import { fileURLToPath } from 'node:url';
 import { formatDataset } from '../assets/js/format.js';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
-const ICONS = new Set(['key', 'quest', 'locker', 'pin', 'star']);
+const ICONS = new Set(['key', 'quest', 'locker', 'pin', 'star', 'bug', 'card']);
 const errors = [];
 const warnings = [];
 const rel = (p) => relative(root, p);
@@ -108,7 +108,13 @@ function validateGame(game) {
     }
   }
 
-  // Cross references: an item can say it is the reward of substory N.
+  // Cross references: `at` names the place that sells/hands out an item,
+  // `requires.substory` says it is the reward of substory N.
+  for (const item of items) {
+    if (item.at == null) continue;
+    if (!allIds.has(item.at)) errors.push(`${item.iwhere}: "at" refers to unknown id "${item.at}"`);
+    else if (item.at === item.id) errors.push(`${item.iwhere}: "at" points to itself`);
+  }
   const substoryNumbers = new Set(items.filter((i) => i.category === 'substory').map((i) => i.number));
   for (const item of items) {
     const n = item.requires?.substory;

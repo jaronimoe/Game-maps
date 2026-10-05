@@ -1,8 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1000" width="1200" height="1000" font-family="Inter, 'Segoe UI', system-ui, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 1000" width="1400" height="1000" font-family="Inter, 'Segoe UI', system-ui, sans-serif">
   <!--
     Schematic map of Kamurocho as it appears in Yakuza Kiwami.
     Hand-drawn from written descriptions of the district; proportions are approximate.
-    Coordinate system: x grows east, y grows south, 1 unit = 1 viewBox unit (1200 x 1000).
+    Coordinate system: x grows east, y grows south, 1 unit = 1 viewBox unit (1400 x 1000).
+    The panel on the right (x > 1180) is a zone diagram of underground Purgatory.
   -->
   <defs>
     <pattern id="trees" width="26" height="26" patternUnits="userSpaceOnUse">
@@ -18,8 +19,8 @@
   </defs>
 
   <!-- backdrop + district footprint -->
-  <rect width="1200" height="1000" fill="#0b0d12"/>
-  <path d="M40 30H1160V622H945V940H40Z" fill="#1b1f29" stroke="#2a3040" stroke-width="2"/>
+  <rect width="1400" height="1000" fill="#0b0d12"/>
+  <path d="M40 30H1160V722H945V940H40Z" fill="#1b1f29" stroke="#2a3040" stroke-width="2"/>
 
   <!-- areas -->
   <rect x="40" y="30" width="520" height="358" fill="#211b29"/>
@@ -48,6 +49,12 @@
   <rect x="936" y="412" width="224" height="176" fill="#241c18"/>
   <rect x="936" y="412" width="224" height="176" fill="url(#shacks)"/>
 
+  <rect x="712" y="505" width="60" height="50" fill="#1f2430"/>
+  <rect x="712" y="505" width="60" height="50" fill="url(#parking)"/>
+  <rect x="1050" y="660" width="58" height="55" fill="#1f2430"/>
+  <rect x="1050" y="660" width="58" height="55" fill="url(#parking)"/>
+  <rect x="1122" y="640" width="34" height="76" fill="#15171d" stroke="#2a3040" stroke-dasharray="4 4"/>
+
   <rect x="372" y="784" width="86" height="56" rx="6" fill="#1a3022"/>
   <rect x="372" y="784" width="86" height="56" rx="6" fill="url(#trees)"/>
 
@@ -65,13 +72,14 @@
       <path d="M936 470H1160M936 530H1160M985 412V588M1045 412V588M1105 412V588"/>
     </g>
     <g stroke="#2f3544" stroke-width="7">
-      <path d="M520 655H585M705 525V600"/>
+      <path d="M520 655H585M1115 619V700M950 690H1050"/>
     </g>
     <g stroke="#3a4152">
       <path d="M552 30V400" stroke-width="14"/>
       <path d="M200 530V600" stroke-width="12"/>
       <path d="M438 400V600" stroke-width="14"/>
       <path d="M790 262V600" stroke-width="12"/>
+      <path d="M700 412V600" stroke-width="14"/>
       <path d="M240 600V940" stroke-width="22"/>
       <path d="M470 600V940" stroke-width="28"/>
       <path d="M700 600V940" stroke-width="20"/>
@@ -101,8 +109,8 @@
     <text x="245" y="80" font-size="24">HOTEL DISTRICT</text>
     <text x="1010" y="215" font-size="24" fill="#7fa58b">WEST PARK</text>
     <text x="248" y="478" font-size="15" fill="#a0a8bd" letter-spacing="4">THEATER SQUARE</text>
-    <text x="1048" y="498" font-size="15" fill="#c09a82">CHAMPION</text>
-    <text x="1048" y="518" font-size="15" fill="#c09a82">DISTRICT</text>
+    <text x="1048" y="556" font-size="15" fill="#c09a82">CHAMPION</text>
+    <text x="1048" y="574" font-size="15" fill="#c09a82">DISTRICT</text>
   </g>
   <g fill="#9aa3ba" font-weight="700" text-anchor="middle" letter-spacing="2">
     <text x="610" y="485" font-size="11">MILLENNIUM</text>
@@ -118,7 +126,7 @@
     <text x="960" y="404">SHICHIFUKU ST.</text>
     <text x="130" y="605" font-size="12">TAIHEI BLVD.</text>
     <text x="590" y="605" font-size="12">TAIHEI BLVD.</text>
-    <text x="1050" y="605" font-size="12">TAIHEI BLVD.</text>
+    <text x="1105" y="605" font-size="12">TAIHEI BLVD.</text>
     <text x="580" y="927">SHOWA ST.</text>
     <text x="380" y="927">SHOWA ST.</text>
     <text transform="translate(244 850) rotate(-90)">TENKAICHI ST.</text>
@@ -126,6 +134,7 @@
     <text transform="translate(704 700) rotate(-90)">PINK ST.</text>
     <text transform="translate(926 820) rotate(-90)">SENRYO AVE.</text>
     <text transform="translate(926 460) rotate(-90)">SENRYO AVE.</text>
+    <text transform="translate(704 470) rotate(-90)" font-size="9">PINK ST. N.</text>
   </g>
   <g fill="#8d95a8" font-weight="600" letter-spacing="1.5" text-anchor="middle" font-size="8">
     <text x="130" y="763">SUPPON ST.</text>
@@ -140,15 +149,45 @@
     <text transform="translate(813 690) rotate(-90)">PINK ALLEY</text>
   </g>
 
+  <!-- Purgatory: zone diagram of the underground district, entered from West Park -->
+  <g>
+    <rect x="1190" y="40" width="195" height="400" rx="14" fill="#140f1c" stroke="#5a4580" stroke-width="2" stroke-dasharray="8 6"/>
+    <text x="1287" y="66" text-anchor="middle" font-size="15" font-weight="700" letter-spacing="5" fill="#b79ce6">PURGATORY</text>
+    <text x="1287" y="82" text-anchor="middle" font-size="9" letter-spacing="1" fill="#7d6a9c">underground · via West Park</text>
+    <path d="M1288 112V425" stroke="#3a3150" stroke-width="16"/>
+    <path d="M1296 320H1330M1296 350H1330M1296 380H1330" stroke="#3a3150" stroke-width="8"/>
+    <rect x="1276" y="92" width="24" height="20" rx="3" fill="#3b2a52" stroke="#6b4f94" stroke-width="2"/>
+    <path d="M1280 98h16M1280 103h16M1280 108h16" stroke="#8c6cc0" stroke-width="2"/>
+    <rect x="1200" y="100" width="70" height="95" rx="6" fill="#2a1730"/>
+    <rect x="1262" y="112" width="8" height="16" fill="#5a3262"/>
+    <rect x="1262" y="140" width="8" height="16" fill="#5a3262"/>
+    <rect x="1262" y="168" width="8" height="16" fill="#5a3262"/>
+    <rect x="1200" y="215" width="70" height="60" rx="6" fill="#22192d"/>
+    <rect x="1318" y="170" width="40" height="20" rx="3" fill="#2b2a3a" stroke="#4a4560" stroke-width="1.5"/>
+    <circle cx="1338" cy="222" r="16" fill="#1d2c3c" stroke="#3e5a78" stroke-width="2"/>
+    <rect x="1200" y="300" width="76" height="110" rx="8" fill="#2a1d24" stroke="#5a3a44" stroke-width="2"/>
+    <rect x="1330" y="290" width="48" height="140" rx="6" fill="#12233a"/>
+    <g text-anchor="middle" font-weight="700" letter-spacing="1.5" font-size="8">
+      <text x="1233" y="174" fill="#b07ab8">RED-LIGHT</text>
+      <text x="1233" y="184" fill="#b07ab8">DISTRICT</text>
+      <text x="1235" y="268" fill="#8a7aa0">STALLS</text>
+      <text x="1338" y="250" fill="#6f8fb3">FOUNTAIN</text>
+      <text x="1338" y="166" fill="#8a85a3">SHED</text>
+      <text x="1238" y="400" fill="#b98a95">COLISEUM</text>
+      <text x="1354" y="300" fill="#5b7fa8">WATER</text>
+    </g>
+    <text x="1287" y="455" text-anchor="middle" font-size="9" fill="#59627a">zones only · layout approximate</text>
+  </g>
+
   <!-- compass + caption in the empty south-east corner -->
-  <g transform="translate(1065 745)">
+  <g transform="translate(1065 810)">
     <circle r="34" fill="none" stroke="#2a3040" stroke-width="2"/>
     <path d="M0 -28L9 4L0 -2L-9 4Z" fill="#e2e6ef"/>
     <path d="M0 28L9 -4L0 2L-9 -4Z" fill="#3a4152"/>
     <text y="-40" text-anchor="middle" font-size="13" font-weight="700" fill="#e2e6ef">N</text>
   </g>
   <g text-anchor="middle" fill="#59627a">
-    <text x="1065" y="860" font-size="18" font-weight="700" letter-spacing="5">KAMUROCHO</text>
-    <text x="1065" y="880" font-size="10" letter-spacing="1">schematic · not to scale</text>
+    <text x="1065" y="895" font-size="18" font-weight="700" letter-spacing="5">KAMUROCHO</text>
+    <text x="1065" y="915" font-size="10" letter-spacing="1">schematic · not to scale</text>
   </g>
 </svg>

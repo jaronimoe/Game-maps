@@ -18,6 +18,8 @@ const ICONS = {
   quest: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M10.6 3.5h2.8l-.45 11.5h-1.9zM12 17.2a1.9 1.9 0 1 1 0 3.8 1.9 1.9 0 0 1 0-3.8z"/></svg>',
   locker: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M4 3h16v18H4zm2 2v6h5V5zm7 0v6h5V5zM6 13v6h5v-6zm7 0v6h5v-6z"/></svg>',
   pin: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="6" fill="currentColor"/></svg>',
+  bug: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 4.5a2.5 2.5 0 0 1 2.4 1.9A5 5 0 0 1 17 10.8V15a5 5 0 0 1-10 0v-4.2a5 5 0 0 1 2.6-4.4A2.5 2.5 0 0 1 12 4.5z"/><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M7 10.5 4 9M7 14H3.8M7.6 17.6 5 19.6M17 10.5 20 9M17 14h3.2M16.4 17.6l2.6 2"/></svg>',
+  card: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="m12 7.5 1.3 2.7 3 .4-2.2 2.1.6 3L12 14.2l-2.7 1.5.6-3-2.2-2.1 3-.4z"/></svg>',
   star: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="m12 3 2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z"/></svg>',
 };
 const CHECK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" d="m5 12.5 4.5 4.5L19 7.5"/></svg>';
@@ -257,18 +259,49 @@ export async function mountGameMap(root) {
     }
   }
 
+  // ---- cross references ----------------------------------------------------
+  // Items can point at a place (`at`: the shop that sells it, the person who hands it out)
+  // or at a substory (`requires.substory`). Items without their own coordinates are shown
+  // at that place on the map when it has a position.
+  function substoryFor(number) {
+    return number == null ? null : items.find((i) => i.cat.id === 'substory' && i.raw.number === number);
+  }
+
+  function placeFor(item) {
+    return item.raw.at ? byId.get(item.raw.at) ?? null : null;
+  }
+
+  function anchorOf(item) {
+    if (hasCoords(item)) return item;
+    const place = placeFor(item);
+    if (place && hasCoords(place)) return place;
+    const sub = substoryFor(item.raw.requires?.substory);
+    return sub && hasCoords(sub) ? sub : null;
+  }
+
+  const link = (target) => `<a href="#${encodeURIComponent(target.id)}">${esc(target.raw.name)}</a>`;
+
   // ---- popup ---------------------------------------------------------------
-  function requirementHtml(req) {
-    if (!req) return '';
+  function sourceHtml(item) {
+    const req = item.raw.requires ?? {};
     const parts = [];
+    const place = placeFor(item);
+    if (place) parts.push(`Get it at ${link(place)}`);
     if (req.substory != null) {
-      const sub = items.find((i) => i.cat.id === 'substory' && i.raw.number === req.substory);
-      const label = `Substory #${esc(req.substory)}${sub ? `: ${esc(sub.raw.name)}` : ''}`;
-      parts.push(`Reward for completing ${sub ? `<a href="#${encodeURIComponent(sub.id)}">${label}</a>` : label}`);
+      const sub = substoryFor(req.substory);
+      parts.push(`Reward for completing ${sub ? link(sub) : `Substory #${esc(req.substory)}`}`);
     }
     if (req.chapter != null) parts.push(`Available from Chapter ${esc(req.chapter)}`);
     if (req.text) parts.push(esc(req.text));
     return parts.map((p) => `<p class="gm-popup-req">${p}</p>`).join('');
+  }
+
+  function offeredHereHtml(item) {
+    const here = items.filter((i) => i.raw.at === item.id
+      || (item.cat.id === 'substory' && i.raw.requires?.substory != null && i.raw.requires.substory === item.raw.number));
+    if (!here.length) return '';
+    const label = item.cat.id === 'substory' ? 'Rewards' : 'Available here';
+    return `<p class="gm-popup-req">${label}: ${here.map(link).join(', ')}</p>`;
   }
 
   function popupHtml(item) {
@@ -277,7 +310,6 @@ export async function mountGameMap(root) {
       .filter((f) => raw[f.key] != null && raw[f.key] !== '')
       .map((f) => `<dt>${esc(f.label)}</dt><dd>${esc(raw[f.key])}</dd>`)
       .join('');
-    const rewardsHere = items.filter((i) => i.raw.requires?.substory != null && cat.id === 'substory' && i.raw.requires.substory === raw.number);
     return `
       <article class="gm-popup" data-id="${esc(item.id)}">
         <p class="gm-popup-cat" style="--c:${cat.color}">${esc(cat.name)}</p>
@@ -285,10 +317,10 @@ export async function mountGameMap(root) {
         ${raw.inside ? `<p class="gm-popup-inside">Indoors · ${esc(raw.inside)}</p>` : ''}
         ${raw.description ? `<p>${esc(raw.description)}</p>` : ''}
         ${fields ? `<dl>${fields}</dl>` : ''}
-        ${requirementHtml(raw.requires)}
-        ${rewardsHere.map((r) => `<p class="gm-popup-req">Also rewards <a href="#${encodeURIComponent(r.id)}">${esc(r.raw.name)}</a></p>`).join('')}
+        ${sourceHtml(item)}
+        ${offeredHereHtml(item)}
         ${raw.notes ? `<p class="gm-popup-notes">${esc(raw.notes)}</p>` : ''}
-        ${hasCoords(item) ? '' : '<p class="gm-popup-notes">Not a map location, so there is no marker for it.</p>'}
+        ${anchorOf(item) ? '' : '<p class="gm-popup-notes">Not a map location, so there is no marker for it.</p>'}
         ${edit.active && hasCoords(item) ? `<code class="gm-code">"x": ${raw.x}, "y": ${raw.y}</code>` : ''}
         <div class="gm-popup-actions">
           ${cat.trackable ? `<label class="gm-found"><input type="checkbox" data-found="${esc(item.id)}" ${isFound(item) ? 'checked' : ''}> Found</label>` : ''}
@@ -345,6 +377,7 @@ export async function mountGameMap(root) {
   }
 
   function subtitleFor(item) {
+    if (item.cat.subtitle) return item.raw[item.cat.subtitle] ?? '';
     const firstField = (item.cat.fields ?? []).find((f) => item.raw[f.key] != null && item.raw[f.key] !== '');
     return firstField ? item.raw[firstField.key] : item.raw.description ?? '';
   }
@@ -373,7 +406,7 @@ export async function mountGameMap(root) {
         <button type="button" class="gm-item-main" data-action="focus">
           <span class="gm-badge${item.raw.label ? '' : ' gm-badge--icon'}" style="--c:${item.cat.color}">${badgeHtml(item)}</span>
           <span class="gm-item-text">
-            <span class="gm-item-name">${esc(item.raw.name)}${placed ? '' : ' <em class="gm-tag">not on map</em>'}</span>
+            <span class="gm-item-name">${esc(item.raw.name)}${anchorOf(item) ? '' : ' <em class="gm-tag">not on map</em>'}</span>
             <span class="gm-item-sub">${esc(subtitleFor(item))}</span>
           </span>
         </button>
@@ -446,28 +479,31 @@ export async function mountGameMap(root) {
     const item = byId.get(id);
     if (!item) return;
     if (state.hidden.has(item.cat.id)) toggleCategory(item.cat.id, true);
-    if (hasCoords(item) && item.mapId !== state.mapId) await switchMap(item.mapId, { fit: false });
+    const anchor = anchorOf(item);
+    if (anchor && anchor.mapId !== state.mapId) await switchMap(anchor.mapId, { fit: false });
     closeDrawer();
+    const zoom = Math.max(map.getZoom(), 1);
+    const flyThenOpen = (target, open) => {
+      if (map.distance(map.getCenter(), target) < 2 && map.getZoom() === zoom) open();
+      else {
+        map.once('moveend', open);
+        map.flyTo(target, zoom, { duration: 0.6 });
+      }
+    };
     if (!hasCoords(item)) {
-      L.popup({ className: 'gm-popup-wrap', maxWidth: 320, minWidth: 220 })
-        .setLatLng(map.getCenter())
+      // Bought somewhere / handed out by a substory: show the card at that place if it is on the map.
+      const popup = L.popup({ className: 'gm-popup-wrap', maxWidth: 320, minWidth: 220 })
         .setContent(popupHtml(item))
-        .on('remove', () => state.activeId === id && setActive(null))
-        .openOn(map);
+        .on('remove', () => state.activeId === id && setActive(null));
+      const target = anchor ? toLatLng(anchor.raw.x, anchor.raw.y, mapDefs.get(anchor.mapId)) : map.getCenter();
       setActive(id);
+      flyThenOpen(target, () => popup.setLatLng(target).openOn(map));
       return;
     }
     state.activeId = id;
     syncMarkers();
     const marker = markerFor(item);
-    const zoom = Math.max(map.getZoom(), 1);
-    const target = marker.getLatLng();
-    if (map.distance(map.getCenter(), target) < 2 && map.getZoom() === zoom) {
-      marker.openPopup();
-    } else {
-      map.once('moveend', () => marker.openPopup());
-      map.flyTo(target, zoom, { duration: 0.6 });
-    }
+    flyThenOpen(marker.getLatLng(), () => marker.openPopup());
   }
 
   function toggleCategory(catId, visible) {

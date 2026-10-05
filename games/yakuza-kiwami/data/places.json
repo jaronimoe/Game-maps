@@ -27,6 +27,17 @@
     { "id": "lm-beam", "name": "Beam", "x": 684, "y": 838, "description": "DVD store on Pink St." },
     { "id": "lm-shoten", "name": "Shoten", "x": 905, "y": 706, "description": "Shogi parlor on Senryo Ave." },
     { "id": "lm-karaokekan", "name": "Karaokekan", "x": 905, "y": 862, "description": "Karaoke near the south end of Senryo Ave." },
-    { "id": "lm-public-park-3", "name": "Public Park 3", "x": 415, "y": 806, "description": "Small park on Tenkaichi Alley." }
+    { "id": "lm-public-park-3", "name": "Public Park 3", "x": 415, "y": 806, "description": "Small park on Tenkaichi Alley." },
+    { "id": "lm-club-sega-nakamichi", "name": "Club SEGA (Nakamichi St.)", "x": 494, "y": 642, "description": "Arcade with the MesuKing machine. The Professor hands out starter cards here, and the MesuKing substories (#71-78) start here." },
+    { "id": "lm-smile-burger", "name": "Smile Burger", "x": 494, "y": 752, "description": "Burger joint on the east side of Nakamichi St." },
+    { "id": "lm-kyushu-no1-star", "name": "Kyushu No. 1 Star", "x": 822, "y": 682, "description": "Ramen shop in Pink Alley." },
+    { "id": "lm-kanrai", "name": "Kanrai", "x": 866, "y": 426, "description": "Yakiniku restaurant on Shichifuku St. East." },
+    { "id": "lm-kazama-office", "name": "Kazama Family office", "x": 222, "y": 860, "description": "On Tenkaichi St." },
+    { "id": "lm-shellac", "name": "Shellac", "x": 1075, "y": 500, "description": "Bar in the Champion District." },
+    { "id": "lm-bantam", "name": "Bantam", "x": 722, "y": 478, "description": "Irish pub on the east side of Millennium Tower." },
+    { "id": "lm-taxi-hotel", "name": "Taxi stand (Hotel District)", "x": 280, "y": 44, "description": "Taxi stand at the north end of the Hotel District." },
+    { "id": "lm-taxi-shichifuku", "name": "Taxi stand (Shichifuku St.)", "x": 270, "y": 414, "description": "Taxi stand on Shichifuku St. West." },
+    { "id": "lm-taxi-park", "name": "Taxi stand (Park Blvd.)", "x": 1132, "y": 272, "description": "Taxi stand at the east end of Park Blvd., by West Park." },
+    { "id": "lm-purgatory-vendor", "name": "Purgatory vendor", "x": 1222, "y": 240, "description": "Weapon vendor in Purgatory's stalls who also sells MesuKing cards.", "inside": "Purgatory (underground)" }
   ]
 }
